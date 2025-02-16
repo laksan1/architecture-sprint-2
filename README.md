@@ -1,1 +1,1 @@
-# architecture-sprint-2
+# Architecture sprint 2
