@@ -49,10 +49,10 @@ docker compose exec -T mongos_router mongosh --port 27020 --quiet <<EOF
 sh.addShard('shard1/shard1:27018');
 sh.addShard('shard2/shard2:27019');
 EOF
-log_message "Mongos router configured."
+log_message "Mongos router configured. Shards has been added"
 sleep 5  # Ожидание 5 секунд
 
-# Шаг 4: Включение шардинга в базе данных
+# Шаг 4: Включение шардинга в базе данных и заполнение
 log_message "Data inserted into 'helloDoc'."
 docker compose exec -T mongos_router mongosh --port 27020 --quiet <<EOF
 use somedb;
@@ -64,7 +64,7 @@ sh.shardCollection('somedb.helloDoc', { 'name': 'hashed' });
 for(var i = 0; i < 1000; i++) db.helloDoc.insertOne({age:i, name:"ly"+i});
 db.helloDoc.countDocuments();
 EOF
-
+log_message "Loading data is completed"
 sleep 10 # Ожидание 10 секунд
 
 
