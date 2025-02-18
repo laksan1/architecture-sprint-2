@@ -181,17 +181,17 @@ services:
     container_name: mongos_router
     restart: always
     ports:
-      - "27020:27020"
+      - "27024:27024"
     networks:
       app-network:
-        ipv4_address: 173.17.0.7
+        ipv4_address: 173.17.0.3
     command: [
         "mongos", #обычная mongo в режиме роутера
         "--configdb",
         "config_server/configSrv:27017", #передача данных сервера конфигурации
         "--bind_ip_all",
         "--port",
-        "27020",
+        "27024",
       ]
     healthcheck:
       test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
@@ -209,7 +209,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      MONGODB_URL: "mongodb://mongos_router:27020"
+      MONGODB_URL: "mongodb://mongos_router:27024"
       MONGODB_DATABASE_NAME: "somedb"
 
 networks:
@@ -222,6 +222,10 @@ networks:
 
 volumes:
   config-data:
-  shard1-data:
-  shard2-data:
+  shard1_1-data:
+  shard1_2-data:
+  shard1_3-data:
+  shard2_1-data:
+  shard2_2-data:
+  shard2_3-data:
   pymongo_api:
