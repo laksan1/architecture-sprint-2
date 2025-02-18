@@ -40,7 +40,7 @@ services:
     command: [
         "--shardsvr", #запуск в режиме шардинга
         "--replSet",
-        "shard1_1-replica-set", #название реплики
+        "shard1-replica-set", #название реплики
         "--bind_ip_all",
         "--port",
         "27018",
@@ -65,7 +65,7 @@ services:
     command: [
         "--shardsvr", #запуск в режиме шардинга
         "--replSet",
-        "shard1_2-replica-set", #название реплики
+        "shard1-replica-set", #название реплики
         "--bind_ip_all",
         "--port",
         "27019",
@@ -90,7 +90,7 @@ services:
     command: [
         "--shardsvr", #запуск в режиме шардинга
         "--replSet",
-        "shard1_3-replica-set", #название реплики
+        "shard1-replica-set", #название реплики
         "--bind_ip_all",
         "--port",
         "27020",
