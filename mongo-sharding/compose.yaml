@@ -13,8 +13,7 @@ services:
     volumes:
       - config-data:/data/db
     command: [
-        "--configsvr",
-        //запуск в режиме конфигурации
+        "--configsvr", #запуск в режиме конфигурации
         "--replSet",
         "config_server",
         "--bind_ip_all",
@@ -39,11 +38,9 @@ services:
     volumes:
       - shard1-data:/data/db
     command: [
-        "--shardsvr",
-        //запуск в режиме шардинга
+        "--shardsvr", #запуск в режиме шардинга
         "--replSet",
-        "shard1",
-        //название реплики
+        "shard1", #название реплики
         "--bind_ip_all",
         "--port",
         "27018",
@@ -66,13 +63,10 @@ services:
     volumes:
       - shard2-data:/data/db
     command: [
-        "--shardsvr",
-        //запуск в режиме шардинга
+        "--shardsvr", #запуск в режиме шардинга
         "--replSet",
-        "shard2",
-        //название реплик
-        "--bind_ip_all",
-        // обратите внимание - она отличается от реплики 1-го шарда
+        "shard2", #название реплик
+        "--bind_ip_all", #обратите внимание - она отличается от реплики 1-го шарда
         "--port",
         "27019",
       ]
@@ -92,8 +86,7 @@ services:
       app-network:
         ipv4_address: 173.17.0.7
     command: [
-        "mongos",
-        //обычная mongo в режиме роутера
+        "mongos", #обычная mongo в режиме роутера
         "--configdb",
         "config_server/configSrv:27017", #передача данных сервера конфигурации
         "--bind_ip_all",
@@ -104,11 +97,6 @@ services:
       test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
       interval: 5s
       start_period: 10s
-  mongodb1:
-    container_name: mongodb1
-    image: dh-mirror.gitverse.ru/mongo:latest
-    volumes:
-      - mongodb1_data_container:/data/db
 
   pymongo_api:
     container_name: pymongo_api
@@ -117,12 +105,23 @@ services:
       dockerfile: Dockerfile
     image: kazhem/pymongo_api:1.0.0
     depends_on:
-      - mongodb1
+      - mongos_router
     ports:
       - 8080:8080
     environment:
-      MONGODB_URL: "mongodb://mongodb1"
+      MONGODB_URL: "mongodb://mongos_router:27020"
       MONGODB_DATABASE_NAME: "somedb"
 
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 173.17.0.0/16
+
 volumes:
-  mongodb1_data_container:
+  config-data:
+  shard1-data:
+  shard2-data:
+  pymongo_api:
