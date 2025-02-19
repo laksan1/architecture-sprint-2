@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Логирование
-log_file="setup_mongo-sharding-repl.log"
+log_file="setup_mongo-sharding-repl-cache.log"
 touch $log_file
 
 log_message() {

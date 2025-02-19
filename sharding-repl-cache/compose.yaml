@@ -198,6 +198,7 @@ services:
       interval: 5s
       start_period: 10s
 
+  #приложение
   pymongo_api:
     container_name: pymongo_api
     build:
@@ -208,9 +209,25 @@ services:
       - mongos_router
     ports:
       - 8080:8080
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.2
     environment:
       MONGODB_URL: "mongodb://mongos_router:27024"
       MONGODB_DATABASE_NAME: "somedb"
+      REDIS_URL: "redis://redis1:6379"
+
+  #Кэш
+  redis1:
+    image: "redis:latest"
+    container_name: redis1
+    ports:
+      - "6379"
+    volumes:
+      - redis1_data:/data
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.11
 
 networks:
   app-network:
@@ -218,7 +235,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 173.17.0.0/16
+        - subnet: 173.17.0.0/24
 
 volumes:
   config-data:
@@ -229,3 +246,4 @@ volumes:
   shard2_2-data:
   shard2_3-data:
   pymongo_api:
+  redis1_data:
