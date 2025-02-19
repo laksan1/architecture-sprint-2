@@ -2,6 +2,12 @@
 
 ## Шаги
 
+- все шаги описаны в файле скрипта
+
+```
+./scripts/setup_mongo-sharding-repl.sh
+```
+
 ### Запуск
 
 Запускаем docker compose с контейнерами

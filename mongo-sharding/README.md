@@ -2,6 +2,12 @@
 
 ## Шаги
 
+- все шаги описаны в файле скрипта
+
+```
+./scripts/setup_mongo_sharding.sh
+```
+
 ### Запуск
 
 Запускаем docker compose с контейнерами
@@ -24,5 +30,5 @@ docker compose up -d
 `shard2/shard2:27019' because a local database 'somedb' exists in another shard1`)
 
 ```shell
-docker system prune -a --volumes
+docker volume prune -a
 ```
