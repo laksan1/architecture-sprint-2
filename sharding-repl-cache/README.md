@@ -1,6 +1,6 @@
 # Sharding-Repl-Cache
 
-## Шаги
+## Описание
 
 - Я потратил сутки, чтобы понять почему по curl http://localhost:8080 приложение pymongo_api недоступно. Ошибка Internal Server Error.
   Перепробвал различные варианты: network ( app-network:), зеркала, разные порты и тд
